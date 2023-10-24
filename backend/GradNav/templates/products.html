@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %} Product Page {% endblock %}
+
+
+{% block content %}
+<ul>
+    {% for p in products  %}
+    
+        <li>{{ p.name }} - €{{p.price}} - {{p.description}}</li>
+        <a href="/products/{{p.id}}/" class="btn btn-primary"> View </a>
+        <img src="{{p.product_image.url}}" />
+        </a>
+    {% endfor %}
+</ul>
+{% endblock %}
