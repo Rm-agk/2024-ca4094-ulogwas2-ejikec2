@@ -5,9 +5,17 @@
 {% endblock %}
 
 {%  block content %}
-    <form action="." method="POST">
-    {% csrf_token %}
-    {{ form.as_table }}
-    <button type="submit">SUBMIT</button>
-    </form>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <form action="." method="POST">
+            {% csrf_token %}
+            {{ form.as_table }}
+            <button type="submit">Register</button>
+        </form>
+        {{ form.errors }}
+    </body>
+</html>
 {%  endblock %}

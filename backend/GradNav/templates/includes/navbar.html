@@ -1,29 +1,52 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<!-- Add the following links in the head of your HTML file to include Bootstrap CSS and JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-rbs5rQ5iExAxZlH3l/i7Wb8Er8ceUqD8i9DwR8Shl5ii4WvWl/RaCrZuG5stfDO3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofT5yWoFf6E5K80C5C1SjlzNP2QF6dCj" crossorigin="anonymous"></script>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/">GradNav Salon</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/products">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/basket">Basket</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/orderhistory">Orders</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/feedback">Feedback</a>
-          </li>
-          
-          
-        </ul>
-      </div>
+        <img src="/media/GradNav.jpg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+        <a class="navbar-brand" href="/">GradNav Salon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/basket">Basket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orderhistory">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feedback">Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout/">Logout</a>
+                </li>
+            </ul>
+        </div>
     </div>
-  </nav>
+</nav>
+
+<!-- Optional: Add custom CSS to further style the navbar -->
+<style>
+    /* Add your custom styles here */
+    .navbar {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-brand {
+        font-weight: bold;
+    }
+
+    .navbar-nav .nav-link {
+        margin-right: 15px;
+        font-weight: 500;
+    }
+</style>

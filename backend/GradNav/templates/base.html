@@ -7,16 +7,20 @@
 </head>
 <body>
 
+{% if user.is_male %}
     {% include "includes/navbar.html" %}
+{% else %}
+    {% include "includes/navbarf.html" %}
+{% endif %}
+
+
     {% block content %}
     
     {% endblock %}
     
     {% if user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="/basket">Shopping basket</a>
-              </li>
-{% endif %}
+
+    {% endif %}
 
     <div class="container">
     {% block body %}{% endblock %}

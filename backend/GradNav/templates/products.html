@@ -3,18 +3,61 @@
 {% block title %} Product Page {% endblock %}
 
 {% block content %}
-<div class="row row-cols-1 row-cols-md-3 g-4 my-2">
-    {% for p in products %}
-        <div class="col">
-            <div class="card">
-                <img src="{{ p.product_image.url }}" class="card-img-top" alt="{{ p.name }}" height="400px" width=" 200px">
-                <div class="card-body">
-                    <h5 class="card-title">{{ p.name }}</h5>
-                    <p class="card-text">${{ p.price }} - {{ p.description }}</p>
-                    <a href="/products/{{p.id}}/" class="btn btn-primary">Book</a>
+<div class="container my-5">
+    <h2 class="text-center mb-4">Our Products</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for p in products %}
+            <div class="col mb-4">
+                <div class="card h-100">
+                    <img src="{{ p.product_image.url }}" class="card-img-top" alt="{{ p.name }}" height="400px" width="200px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ p.name }}</h5>
+                        <p class="card-text">${{ p.price }} - {{ p.description|truncatechars:100 }}</p>
+                        <button class="btn btn-primary book-btn" data-product-id="{{ p.id }}">Book Now</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
 </div>
+
+<!-- Optional: Add custom CSS to further style the page -->
+<style>
+    /* Add your custom styles here */
+    .card {
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Add more custom styles as needed */
+</style>
+
+<!-- Optional: Add custom JavaScript for additional functionality -->
+<script>
+    // Add your custom JavaScript code here
+    document.addEventListener("DOMContentLoaded", function () {
+        // Select all elements with the class "book-btn"
+        var bookButtons = document.querySelectorAll('.book-btn');
+
+        // Add a click event listener to each button
+        bookButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Get the product ID from the button's data-product-id attribute
+                var productId = button.getAttribute('data-product-id');
+
+                // Show a confirmation dialog
+                var confirmBooking = confirm("Are you sure you want to book this product?");
+
+                // If the user clicks "OK" in the confirmation dialog, redirect to the booking page
+                if (confirmBooking) {
+                    window.location.href = "/products/" + productId + "/";
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
