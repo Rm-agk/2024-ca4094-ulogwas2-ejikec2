@@ -22,7 +22,9 @@ def index(request):
     else:
         # User is female or other
         return render(request, 'female_products.html')
-
+@login_required
+def home(request):
+    return render(request, 'home.html')
 
 from django.shortcuts import render
 from .models import Product, FemaleProduct
@@ -41,6 +43,7 @@ def index(request):
         # User is female or other
         return render(request, 'female_products.html')
 
+@login_required
 def all_product(request):
     user = request.user
     if user.is_authenticated:
@@ -58,6 +61,7 @@ def all_product(request):
         template_name = 'products.html'
 
     return render(request, template_name, {'products': products})
+
 
 def product_individual(request, prodid):
     product = Product.objects.get(id=prodid)
@@ -78,7 +82,7 @@ class MaleSignupView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('/')
+        return redirect('/home')
     
 class FemaleSignupView(CreateView):
     model = User
@@ -91,11 +95,12 @@ class FemaleSignupView(CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('/')
+        return redirect('/home')
     
 class UserLoginView(LoginView):
     template_name='login.html'
 
+@login_required
 def logout_user(request):
     if request.method == 'POST':
         # Display a message to confirm logout using Django messages framework
@@ -105,6 +110,7 @@ def logout_user(request):
         return redirect('confirm_logout')  # You can create a confirm_logout view
 
     # Original logout logic remains the same if it's not a POST request
+    
     logout(request)
     return redirect("/")
 
@@ -218,6 +224,19 @@ def remove_item(request,sbi):
     return redirect("/basket")
 
 @login_required
+def femaleremove_item(request,sbi):
+    basketitem = FemaleBasketItem.objects.get(id=sbi)
+    if basketitem is None:
+        return redirect("/basket") # if error redirect to shopping basket
+    else:
+        if basketitem.quantity > 1:
+            basketitem.quantity = basketitem.quantity-1
+            basketitem.save() # save our changes to the db
+        else:
+            basketitem.delete() # delete the basket item
+    return redirect("/femalebasket")
+
+@login_required
 def order(request):
     # load in all data we need, user, basket, items
     user = request.user
@@ -251,18 +270,70 @@ def order(request):
         return render(request, 'orderform.html', {'form':form, 'basket':basket, 'sbi':sbi})
     
 @login_required
+def femaleorder(request):
+    # load in all data we need, user, basket, items
+    user = request.user
+    basket = FemaleBasket.objects.filter(user_id=user, is_active=True).first()
+    if basket is None:
+        return redirect("/")
+    sbi = FemaleBasketItem.objects.filter(basket_id=basket)
+    if not sbi.exists(): # if there are no items
+        return redirect("/")
+    # POST or GET
+    if request.method == "POST":
+        # check if valid
+        form = FemaleOrderForm(request.POST)
+        if form.is_valid():
+            order = form.save(commit=False)
+            order.user_id = user
+            order.basket_id = basket
+            total = 0.0
+            for item in sbi:
+                total += float(item.item_price())
+            order.total_price = total
+            order.save()
+            basket.is_active = False
+            basket.save()
+            return render(request, 'femaleordercomplete.html', {'order':order, 'basket':basket, 'sbi':sbi})
+        else:
+            return render(request, 'femaleorderform.html', {'form':form, 'basket':basket, 'sbi':sbi})
+    else:
+        # show the form
+        form = FemaleOrderForm()
+        return render(request, 'femaleorderform.html', {'form':form, 'basket':basket, 'sbi':sbi})
+    
+@login_required
 def previous_orders(request):
     user = request.user
     orders = Order.objects.filter(user_id=user)
     return render(request, 'previous_orders.html', {'orders':orders})
-    
+
+@login_required
+def femaleprevious_orders(request):
+    user = request.user
+    orders = FemaleOrder.objects.filter(user_id=user)
+    return render(request, 'femaleprevious_orders.html', {'orders':orders})
+
+@login_required
 def feedback_form(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
 
         if form.is_valid():
             form.save()
-            return redirect("/")
+            return redirect("/home")
     else:
         form = FeedbackForm()
     return render(request, 'feedback_form.html', {'form': form})
+
+@login_required
+def femalefeedback_form(request):
+    if request.method == 'POST':
+        form = FemaleFeedbackForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return redirect("/home")
+    else:
+        form = FemaleFeedbackForm()
+    return render(request, 'femalefeedback_form.html', {'form': form})

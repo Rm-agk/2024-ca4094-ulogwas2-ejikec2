@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
-    is_male = models.BooleanField(default=False)
+    is_male = models.BooleanField(default=True)
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True)
@@ -70,7 +70,18 @@ class Order(models.Model):
 
     def __str__(self):
         return self.customer_name
-       
+    
+class FemaleOrder(models.Model):
+    id = models.AutoField(primary_key=True)
+    date_ordered = models.DateTimeField(auto_now_add=True)
+    basket_id = models.ForeignKey(FemaleBasket, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    total_price = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
+    shipping_addr = models.TextField(default="")
+
+    def __str__(self):
+        return self.customer_name
+              
 class Feedback(models.Model):
     customer_name = models.CharField(max_length=120)
     email = models.EmailField()
@@ -80,3 +91,15 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.customer_name
+    
+class FemaleFeedback(models.Model):
+    customer_name = models.CharField(max_length=120)
+    email = models.EmailField()
+    product_id = models.ForeignKey(FemaleProduct, on_delete=models.CASCADE)
+    details = models.TextField()
+    satisfy = models.BooleanField()
+
+    def __str__(self):
+        return self.customer_name
+    
+    

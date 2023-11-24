@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Feedback
+{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="display-4 text-center mb-4">Feedback Form</h1>
+
+                        <form id="feedbackForm" method="POST" action="{% url 'index' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            padding-top: 50px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add more styles as needed */
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // You can add additional JavaScript logic if needed
+
+            // Add an event listener for form submission
+            document.getElementById('feedbackForm').addEventListener('submit', function (event) {
+                // Show a success message
+                alert('Feedback submitted successfully! Thank you.');
+
+                // Redirect to the specified URL
+                window.location.href = "/";
+            });
+        });
+    </script>
+{% endblock %}

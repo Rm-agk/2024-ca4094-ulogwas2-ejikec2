@@ -2,31 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{%  block title %}{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        body {
+            margin-bottom: 60px; /* Adjust according to your footer height */
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #cececfbe; /* Change the color as needed */
+            text-align: center;
+            padding: 4px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-{% if user.is_male %}
-    {% include "includes/navbar.html" %}
-{% else %}
-    {% include "includes/navbarf.html" %}
-{% endif %}
 
-
-    {% block content %}
-    
-    {% endblock %}
-    
-    {% if user.is_authenticated %}
-
+    {% if user.is_male %}
+        {% include "includes/navbar.html" %}
+    {% else %}
+        {% include "includes/navbarf.html" %}
     {% endif %}
 
-    <div class="container">
+
+{% block content %}
+{% endblock %}
+
+{% if user.is_authenticated %}
+    <!-- Your authenticated content here -->
+{% endif %}
+
+<div class="container">
     {% block body %}{% endblock %}
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</div>
+
+<div class="footer">
+    <!-- Add your footer content here -->
+    <p>&copy; 2023 GradNav Salon. All rights reserved.</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
-

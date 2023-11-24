@@ -36,8 +36,8 @@
         </table>
 
         <div class="d-flex justify-content-between mt-3">
-            <a href="/products/" class="btn btn-outline-primary">Continue Shopping</a>
-            <a href="/order/" class="btn btn-success">Place Order</a>
+            <a href="/femaleproducts/" class="btn btn-outline-primary">Continue Shopping</a>
+            <a href="/femaleorder/" class="btn btn-success">Place Order</a>
         </div>
     {% endif %}
 </div>
@@ -46,7 +46,7 @@
 <script>
     function confirmRemove(itemId) {
         if (confirm("Are you sure you want to remove this item from your basket?")) {
-            window.location.href = "/removeitem/" + itemId;
+            window.location.href = "/femaleremoveitem/" + itemId;
         }
     }
 </script>
