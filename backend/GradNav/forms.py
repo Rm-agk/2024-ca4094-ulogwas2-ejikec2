@@ -8,34 +8,32 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import *
 
 class MaleSignupForm(UserCreationForm):
-
     class Meta(UserCreationForm.Meta):
         model = User
 
     @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_admin = False
         user.is_male = True
-        user.gender = 'male'
-        user.save()
+        if commit:
+            user.save()
         return user
     
 class FemaleSignupForm(UserCreationForm):
-    # Add gender field for FemaleSignupForm
-    gender = forms.CharField(widget=forms.HiddenInput, initial='female')
-
     class Meta(UserCreationForm.Meta):
         model = User
 
     @transaction.atomic
-    def save(self):
+    def save(self, commit=True):
         user = super().save(commit=False)
         user.is_admin = False
         user.is_male = False
-        user.gender = 'female'  # Set the gender for female users
-        user.save()
+        user.gender = 'female'
+        if commit:
+            user.save()
         return user
+
     
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):

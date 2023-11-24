@@ -10,8 +10,11 @@ class Product(models.Model):
     description = models.TextField(null = False)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0.0)
     product_image = models.FileField(upload_to='products') 
-    gender = models.CharField(max_length=10, choices=[('male', 'Male'), ('female', 'Female')])
-
+    gender = models.CharField(
+        max_length=10,
+        choices=[('male', 'Male'), ('female', 'Female')],
+        default='male',  # Set the default value to 'male'
+    )
 
     def __str__(self):
         return self.name
