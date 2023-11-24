@@ -131,6 +131,6 @@ class FeedbackForm(forms.ModelForm):
 
 class FemaleFeedbackForm(forms.ModelForm):
     class Meta:
-        model = Feedback
+        model = FemaleFeedback
         exclude = []
 
