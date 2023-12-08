@@ -22,26 +22,10 @@ def index(request):
     else:
         # User is female or other
         return render(request, 'female_products.html')
+    
 @login_required
 def home(request):
     return render(request, 'home.html')
-
-from django.shortcuts import render
-from .models import Product, FemaleProduct
-
-def index(request):
-    user = request.user
-    if user.is_anonymous:
-        # If user isn't logged in
-        return render(request, 'index.html')
-
-    elif user.is_male:
-        # User is male
-        return render(request, 'products.html')
-
-    else:
-        # User is female or other
-        return render(request, 'female_products.html')
 
 @login_required
 def all_product(request):

@@ -119,7 +119,7 @@ MEDIA_ROOT  = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 STATIC_URL = "static/"
 LOGIN_URL = "/login/"
-LOGIN_REDIRECT_URL = "/" # redirect to homepage after login
+LOGIN_REDIRECT_URL = "/home" # redirect to homepage after login
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
